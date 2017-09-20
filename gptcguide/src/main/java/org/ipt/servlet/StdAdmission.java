@@ -16,12 +16,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import org.owasp.esapi.ESAPI;
 import org.owasp.esapi.errors.IntrusionException;
 import org.owasp.esapi.errors.ValidationException;
 import org.iptgptc.db.HikariPool;
 import org.ipt.poly.DataFetch;
 import org.ipt.poly.PasswordAuthentication;
+import org.iptgptc.db.ConnectionPools;
 
 
 /**
@@ -76,7 +78,7 @@ public class StdAdmission extends HttpServlet {
             Connection con = null;
             PreparedStatement pst = null;
             try{
-                HikariPool pool = HikariPool.getInstance();
+                DataSource pool = ConnectionPools.getProcessing();
                 con = pool.getConnection();
                 log("HEY");
                 pst = con.prepareStatement("INSERT INTO DB_GPTC.StudentTbl (Adm_No, Std_Name, Address, Class_ID, Pin, Gender, Dob, Email, Phone,Nationality, Religion, Caste, Guar_Name, Relation, Guar_Occ,Anual_Income, Adm_Date, Tenth_Cert, Vhse_Cert, Iti_Cert,Community_Cert, Income_Cert,Cast_Cert, Nativity_Cert, Tc_Cert) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");

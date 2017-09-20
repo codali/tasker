@@ -16,12 +16,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import org.owasp.esapi.ESAPI;
 import org.owasp.esapi.errors.IntrusionException;
 import org.owasp.esapi.errors.ValidationException;
-import org.iptgptc.db.HikariPool;
 import org.ipt.poly.DataFetch;
 import org.ipt.poly.PasswordAuthentication;
+import org.iptgptc.db.ConnectionPools;
 
 
 /**
@@ -76,7 +77,7 @@ public class Admission extends HttpServlet {
             Connection con = null;
             PreparedStatement pst = null;
             try{
-                HikariPool pool = HikariPool.getInstance();
+                DataSource pool = ConnectionPools.getProcessing();
                 con = pool.getConnection();
                 log("HEY");
                 pst = con.prepareStatement("INSERT INTO DB_GPTC.StudentTbl (Adm_No, "
@@ -126,6 +127,7 @@ public class Admission extends HttpServlet {
                 pst.setBytes(3, salt);
                 pst.setString(4, "STD");
                 pst.executeUpdate();
+                response.sendRedirect("admission1.jsp");
             }
             catch(SQLException |ParseException ex){
                 Logger.getLogger(StdAdmission.class.getName()).log(Level.SEVERE, null, ex);

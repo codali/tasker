@@ -15,7 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.iptgptc.db.HikariPool;
+import javax.sql.DataSource;
+import org.iptgptc.db.ConnectionPools;
 
 /**
  *
@@ -217,7 +218,7 @@ public class DataFetch {
     {
         
         try {
-            HikariPool pool = HikariPool.getInstance();
+            DataSource pool = ConnectionPools.getProcessing();
             con =  pool.getConnection();
         } catch (SQLException ex) {
             Logger.getLogger(DataFetch.class.getName()).log(Level.SEVERE, null, ex);

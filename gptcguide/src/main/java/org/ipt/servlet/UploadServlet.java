@@ -20,12 +20,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang.RandomStringUtils;
+import org.iptgptc.db.ConnectionPools;
 
 import org.iptgptc.db.HikariPool;
 
@@ -100,7 +102,7 @@ public class UploadServlet extends HttpServlet {
                 }
             }
             if(fileCheck && idCheck){
-                HikariPool pool = HikariPool.getInstance();
+                DataSource pool = ConnectionPools.getProcessing();
                 Connection con = pool.getConnection();
                 PreparedStatement pst = con.prepareStatement("INSERT INTO DB_GPTC.ASSIGN_DOCS"
                         + " (Assignment_Id,Std_Id,File_Name) values (?,?,?)");

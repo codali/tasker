@@ -17,10 +17,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 
 import org.owasp.esapi.ESAPI;
 import org.iptgptc.db.HikariPool;
 import org.ipt.poly.DataFetch;
+import org.iptgptc.db.ConnectionPools;
 import org.owasp.esapi.errors.IntrusionException;
 import org.owasp.esapi.errors.ValidationException;
 
@@ -43,7 +45,7 @@ public class TopicSubmit extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         PreparedStatement pst=null;
-        HikariPool pool = HikariPool.getInstance();
+        DataSource pool = ConnectionPools.getProcessing();
         Connection con = null;
         DataFetch df = new DataFetch();
         try{

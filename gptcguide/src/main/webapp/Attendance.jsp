@@ -35,7 +35,7 @@
                                             JSPFetch js = new JSPFetch();
                                             String classes[] = js.getClasses(); 
                                         %>
-                                        <h3 class="box-title">Attendance Of Class</h3><select id="clas" onchange="clik()" name="class">
+                                        <h3 class="box-title">Attendance Of Class</h3><select id="clas" onchange="clik()" name="classid">
                                             <option></option>
                                             <%for(int i = 0;i<classes.length; i++){%>
                                             <%if(classes[i]==null)break;%><%=classes[i]%><%}%>

@@ -17,12 +17,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 
 import org.owasp.esapi.ESAPI;
 import org.owasp.esapi.errors.IntrusionException;
 import org.owasp.esapi.errors.ValidationException;
-import org.iptgptc.db.HikariPool;
 import org.ipt.poly.DataFetch;
+import org.iptgptc.db.ConnectionPools;
 
 /**
  *
@@ -89,8 +90,9 @@ public class SubjectAdd extends HttpServlet {
     }
     private void dataUpload(int cod, String nam, int period, int seme) throws SQLException
     {
-        HikariPool pool = HikariPool.getInstance();
+        DataSource pool = ConnectionPools.getProcessing();
         Connection con = pool.getConnection();
+        
         DataFetch df = new DataFetch();
         try (PreparedStatement pst = con.prepareStatement("INSERT INTO DB_GPTC.SubjectTbl"
                 + " (Subject_Code,Subject_Name,Periods_Week,Dep_Id,Semester) values"
@@ -98,7 +100,7 @@ public class SubjectAdd extends HttpServlet {
         pst.setInt(1, cod);
         pst.setString(2, nam);
         pst.setInt(3, period);
-        pst.setInt(4,df.getDepId("CE"));
+        pst.setInt(4,df.getDepId("CS"));//HARD CODED DEP NAME
         pst.setInt(5, seme);
         pst.executeUpdate();
         success++;

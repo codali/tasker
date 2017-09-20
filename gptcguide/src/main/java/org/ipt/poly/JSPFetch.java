@@ -10,7 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.iptgptc.db.HikariPool;
+import javax.sql.DataSource;
+import org.iptgptc.db.ConnectionPools;
 
 /**
  *
@@ -66,14 +67,16 @@ public class JSPFetch {
         getCon();
         String[] array = new String[100];
         int i = 0;
-        try (PreparedStatement ps = con.prepareStatement("SELECT Tchr_Name FROM DB_GPTC.TeachersTbl")){
-            ResultSet rs = ps.executeQuery();
+        try (PreparedStatement ps = con.prepareStatement("SELECT Tchr_Name FROM DB_GPTC.TeachersTbl "
+                + "WHERE Teacher_Id NOT IN (select Tutor_Id from DB_GPTC.ClassTbl)"); 
+                ResultSet rs = ps.executeQuery()){
             while(rs.next())
             {
                 array[i] = rs.getString(1);
                 i++;
             }
             rs.close();
+            ps.close();
         }
         finally{
             killCon();
@@ -388,12 +391,13 @@ public class JSPFetch {
         else 
             return 0;
     }
-    
+    private static DataSource pool;
     private static void getCon()
     {
         
+        
         try {
-            HikariPool pool = HikariPool.getInstance();
+            pool = ConnectionPools.getProcessing();
             con =  pool.getConnection();
         } catch (SQLException ex) {
             Logger.getLogger(DataFetch.class.getName()).log(Level.SEVERE, null, ex);

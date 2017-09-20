@@ -1,29 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.ipt.servlet;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Enumeration;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+
 import org.iptgptc.db.ConnectionPools;
-import org.iptgptc.db.HikariPool;
 
 /**
  *
  * @author musthafa
  */
-public class AssignmentMark extends HttpServlet {
+public class Attendence extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,21 +30,26 @@ public class AssignmentMark extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            
         try{
-            DataSource pool = ConnectionPools.getProcessing();
+            DataSource pool = ConnectionPools.getTransactional();
             Connection con = pool.getConnection();
-            PreparedStatement pst = con.prepareStatement("UPDATE DB_GPTC.ASSIGN_DOCS SET Status = 1, Mark = ? WHERE File_Name = ?");
-            pst.setInt(1, Integer.parseInt(request.getParameter("mark")));
-            log(request.getParameter("mark"));
-            log(request.getParameter("fname"));
-            pst.setString(2, request.getParameter("fname"));
-            pst.executeUpdate();
-            response.sendRedirect("AssignmentMarking.jsp");
+            PreparedStatement pst = null;
+            Enumeration en=request.getParameterNames();
+            int classId = Integer.parseInt(request.getParameter("classid"));
+            boolean status;
+            while(en.hasMoreElements())
+            {
+                Object objOri=en.nextElement();
+                String value=(String)objOri;
+                if(!value.equals("classid"))
+                {
+                    status = request.getParameter(value)!=null;
+                    pst = con.prepareStatement("INSERT INTO `DB_GPTC`.`AttendenceTbl` (`Std_Id`, `Date
+                }
+            }
         }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(AssignmentMark.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        catch(SQLException | NumberFormatException e){}
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -20,6 +20,8 @@ import javax.servlet.http.HttpSession;
 import org.ipt.poly.DataFetch;
 import org.iptgptc.db.HikariPool;
 import java.lang.Exception;
+import javax.sql.DataSource;
+import org.iptgptc.db.ConnectionPools;
 /**
  *
  * @author musthafa
@@ -50,9 +52,11 @@ public class TimeTableServlet extends HttpServlet {
                     i++;
                 }
             }
-            HikariPool pool = HikariPool.getInstance();
+            DataSource pool = ConnectionPools.getTransactional();
             Connection con = pool.getConnection();
-            PreparedStatement pst = con.prepareStatement("SELECT Class_Id FROM "
+            PreparedStatement pst = con.prepareStatement
+        
+        ("SELECT Class_Id FROM "
                     + "DB_GPTC.ClassTbl WHERE Tutor_Id = ?");
             pst.setString(1, session.getAttribute("id").toString());
             ResultSet rs = pst.executeQuery();

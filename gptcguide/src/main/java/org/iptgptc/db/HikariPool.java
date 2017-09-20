@@ -4,50 +4,37 @@
  * and open the template in the editor.
  */
 package org.iptgptc.db;
-import com.zaxxer.hikari.HikariDataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-/**
- *
- * @author musthafa
- */
 
+import com.typesafe.config.Config;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 public class HikariPool {
-
-    private static HikariPool instance = null;
-    private HikariDataSource ds = null;
-
-    static {
-        try {
-            instance = new HikariPool();
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
-
-    }
-
-    
     private HikariPool() {
-        ds = new HikariDataSource();
 
-        ds.setMaximumPoolSize(10);
-        ds.setDriverClassName("com.mysql.jdbc.Driver");
-        ds.setJdbcUrl("jdbc:mysql://localhost:3306/DB_GPTC");
-        ds.setUsername("root");
-        ds.setPassword("rootuser");
-        ds.addDataSourceProperty("cachePrepStmts", "true");
-        ds.addDataSourceProperty("prepStmtCacheSize", "250");
-        ds.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        ds.addDataSourceProperty("useServerPrepStmts", "true");
     }
+    
+    public static HikariDataSource getDataSourceFromConfig(
+        Config conf
+        ) {
 
-    public static HikariPool getInstance() {
-        return instance;
+        HikariConfig jdbcConfig = new HikariConfig();
+        jdbcConfig.setDriverClassName(conf.getString("jdbcDriver"));
+        jdbcConfig.setPoolName(conf.getString("poolName"));
+        jdbcConfig.setMaximumPoolSize(conf.getInt("maximumPoolSize"));
+        jdbcConfig.setMinimumIdle(conf.getInt("minimumIdle"));
+        jdbcConfig.setJdbcUrl(conf.getString("jdbcUrl"));
+        jdbcConfig.setUsername(conf.getString("username"));
+        jdbcConfig.setPassword(conf.getString("password"));
+
+        jdbcConfig.addDataSourceProperty("cachePrepStmts", conf.getBoolean("cachePrepStmts"));
+        jdbcConfig.addDataSourceProperty("prepStmtCacheSize", conf.getInt("prepStmtCacheSize"));
+        jdbcConfig.addDataSourceProperty("prepStmtCacheSqlLimit", conf.getInt("prepStmtCacheSqlLimit"));
+        jdbcConfig.addDataSourceProperty("useServerPrepStmts", conf.getBoolean("useServerPrepStmts"));
+
+        // Add HealthCheck
+
+        // Add Metrics
+        return new HikariDataSource(jdbcConfig);
     }
-
-    public Connection getConnection() throws SQLException {
-        return ds.getConnection();
-    }
-
 }

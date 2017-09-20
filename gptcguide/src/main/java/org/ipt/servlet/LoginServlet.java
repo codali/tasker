@@ -5,6 +5,7 @@
  */
 package org.ipt.servlet;
 
+import com.typesafe.config.Config;
 import java.io.IOException;
 
 
@@ -20,7 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.ipt.poly.PasswordAuthentication;
-import org.iptgptc.db.HikariPool;
+import org.iptgptc.db.ConnectionPools;
+import com.zaxxer.hikari.HikariDataSource;
+import javax.sql.DataSource;
+import org.iptgptc.db.Configs;
 
 /**
  *
@@ -37,13 +41,17 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private static final Config conf = new Configs.Builder()
+                                                  .withResource("pool.conf")
+                                                  .build();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
+        
         if(!request.getParameter("userid").equals("") && !request.getParameter("password").equals(""))
         {
-            HikariPool pool = HikariPool.getInstance();
+            DataSource pool = ConnectionPools.getProcessing();
             try {
                 Connection con = pool.getConnection();
                 PreparedStatement pstm = con.prepareStatement("SELECT Id, HashPass, Salt,Role from DB_GPTC.LoginTbl where UserName = ?");
@@ -57,6 +65,7 @@ public class LoginServlet extends HttpServlet {
                     if(PasswordAuthentication.isExpectedPassword(tempPass, salt, pass))
                     {
                         response.sendRedirect("index.jsp");
+                        log("LOGIN SUCCESSSSS");
                         session.setAttribute("id", rs.getString("Id"));
                         session.setAttribute("role", rs.getString("Role"));
                         session.setAttribute("form", "");

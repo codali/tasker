@@ -16,11 +16,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 import org.owasp.esapi.ESAPI;
 import org.owasp.esapi.errors.IntrusionException;
 import org.owasp.esapi.errors.ValidationException;
 import org.iptgptc.db.HikariPool;
 import org.ipt.poly.DataFetch;
+import org.iptgptc.db.ConnectionPools;
 /**
  *
  * @author musthafa
@@ -45,7 +47,7 @@ public class ClassAllocation extends HttpServlet {
             depCode = ESAPI.validator().getValidInput("Department Code", depCode, "Dept", 4, false);
             teacherName = ESAPI.validator().getValidInput("Teacher name", teacherName, "Name", 40, false);
             int sem = ESAPI.validator().getValidInteger("Semester", request.getParameter("semester"), 1, 6, false);
-            HikariPool pool = HikariPool.getInstance();
+            DataSource pool = ConnectionPools.getProcessing();
             DataFetch df = new DataFetch();
             Connection con = null;
             try {
@@ -74,6 +76,7 @@ public class ClassAllocation extends HttpServlet {
             Logger.getLogger(ClassAllocation.class.getName()).log(Level.SEVERE, null, ex);
             session.setAttribute("from", "error");
         }
+        response.sendRedirect("class_table.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

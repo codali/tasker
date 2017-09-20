@@ -17,12 +17,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 import org.iptgptc.db.HikariPool;
 import org.owasp.esapi.ESAPI;
 import org.owasp.esapi.errors.IntrusionException;
 import org.owasp.esapi.errors.ValidationException;
 import org.ipt.poly.DataFetch;
 import org.ipt.poly.PasswordAuthentication;
+import org.iptgptc.db.ConnectionPools;
 /**
  *
  * @author musthafa
@@ -58,7 +60,7 @@ public class TeacherServlet extends HttpServlet {
             name = ESAPI.validator().getValidInput("Name", name, "Name", 30, false);
             password = ESAPI.validator().getValidInput("Password", password, "SafeString", 16, false);
             
-            HikariPool pool = HikariPool.getInstance();
+            DataSource pool = ConnectionPools.getProcessing();
             DataFetch df = new DataFetch();
             log("on55");
             try {

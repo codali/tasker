@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
+import org.iptgptc.db.ConnectionPools;
 import org.owasp.esapi.ESAPI;
 import org.owasp.esapi.errors.IntrusionException;
 import org.iptgptc.db.HikariPool;
@@ -44,7 +46,7 @@ public class DepartmentServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String departmentCode = null;
         String deparmentName =null;
-        HikariPool pool = HikariPool.getInstance();
+        DataSource pool = ConnectionPools.getProcessing();
         Connection con= null;
         PreparedStatement pstmt = null;
         ResultSet rs=null;

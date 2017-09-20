@@ -3,7 +3,6 @@
     Created on : 10 Jan, 2017, 5:41:03 PM
     Author     : musthafa
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page  import="org.ipt.poly.JSPFetch" %>
 <!DOCTYPE html>
