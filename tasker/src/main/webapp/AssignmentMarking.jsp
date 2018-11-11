@@ -6,7 +6,6 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="org.gec.fetch.JSPFetch"%>
-<%session.setAttribute("assignm", 1);%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -45,8 +44,8 @@
                                         %>
                                     <table class="table table-hover">
                                         <tr>
-                                            <th>SL No</th>
-                                            <th>Student Name</th>
+                                            <th>SL<%Integer.parseInt(session.getAttribute("assignm").toString());%> No</th>
+                                            <th>Studnt Name</th>
                                             <th>View</th>
                                             <th>Mark</th>
                                             <th>Submission</p></th>
@@ -60,8 +59,8 @@
                                             <td><button onclick="nmset('<%=table[i][0]%>')" name="fname" value="<%=table[i][1]%>" class="btn btn-block btn-primary btn-xs" type="submit">Submit Mark</button></td>
                                         </tr>
                                         <%}%>
+                                        </table>
                                     </form>
-                                    </table>
                                 </div>
                             </div>
                         </div>
