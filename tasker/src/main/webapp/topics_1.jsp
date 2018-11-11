@@ -52,8 +52,9 @@
                                             <td><button type="submit" value="<%=ass[i][0]%>" name="submit" class="btn btn-block btn-primary btn-xs" >More Details</button></td>
                                         </tr>
                                         <%}%>
-                                    </form>
                                     </table>
+                                    </form>
+                                    
                                 </div>
                             </div>
                         </div>
