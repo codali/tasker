@@ -31,9 +31,10 @@ public class Assig extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String id = request.getParameter("submit");
+        session.setAttribute("assignm", id);
         response.sendRedirect("AssignmentMarking.jsp");
         log(id);
-        session.setAttribute("assignm", id);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
