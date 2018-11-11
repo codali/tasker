@@ -108,6 +108,14 @@
                                             <input type="text" class="form-control" id="teachername" name="teachername" placeholder="Required" >
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                            <div class="col-sm-10">
+                                                <label>
+                                                    <input type="checkbox" name="setHOD">
+                                                    Set as Head of the Department
+                                                </label>
+                                            </div>
+                                    </div>
                                      <div class="form-group">
                                         <label for="empolee_no" class="col-sm-2 control-label">phone:</label>
                                         <div class="col-sm-10">

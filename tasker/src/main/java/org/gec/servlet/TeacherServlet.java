@@ -74,7 +74,10 @@ public class TeacherServlet extends HttpServlet {
                 pstmnt = con.prepareStatement("INSERT INTO tazker.login values (last_insert_id(),?,?,?)");
                 pstmnt.setString(1,empNo);
                 pstmnt.setString(2, password);
-                pstmnt.setString(3, "TCR");
+                if(request.getParameter("setHOD") != null)
+                    pstmnt.setString(3, "HOD");
+                else
+                    pstmnt.setString(3, "TCR");
                 pstmnt.executeUpdate();
                 //con.close();
                 session.setAttribute("form", "success");
