@@ -19,6 +19,8 @@
         <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
         <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
         <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+        <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+        <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
     </head>
     <body class="hold-transition skin-purple sidebar-mini">
         <div class="wrapper">
@@ -99,8 +101,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input class="form-control" name="lastDate" placeholder="dd/mm/yyyy" data-inputmask="'alias': 'date'"
-                                                       data-validation="date" data-validation-format="dd/mm/yyyy">
+                                                <input class="form-control" name="lastDate" id="reservationtime">
                                             </div>
                                         </div>
                                             
@@ -156,11 +157,21 @@
     <!--<script src="plugins/fastclick/fastclick.js"></script>-->
     <!-- AdminLTE App -->
     <script src="dist/js/app.min.js"></script>
-    <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>    <script>
+    <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <script src="plugins/daterangepicker/moment.js"></script>
+    <script src="plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
+    
+    <script>
         $(function () {
             $(".textarea").wysihtml5();
-            
-        });
+            $('#reservationtime').daterangepicker({
+                "singleDatePicker": true ,
+                        timePicker: true,
+                        timePickerIncrement: 30,
+                        format: 'MM/DD/YYYY h:mm A' 
+                    })
+                });
     </script>
     <script>
         $(document).ready(function () {

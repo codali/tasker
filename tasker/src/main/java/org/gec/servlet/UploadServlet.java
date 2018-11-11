@@ -10,6 +10,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -102,11 +104,19 @@ public class UploadServlet extends HttpServlet {
             }
             if(fileCheck && idCheck){
                 Connection con = Connect.getConnection();
-                PreparedStatement pst = con.prepareStatement("INSERT INTO tazker.ASSIGN_DOCS"
-                        + " (Assignment_Id,Std_Id,File_Name) values (?,?,?)");
+                PreparedStatement pst = con.prepareStatement("SELECT Lst_Date FROM tazker.AssignmentDetailsTbl where Assignment_Id = ?");
+                pst.setInt(1, id);
+                log("ONRESS");
+                ResultSet rs = pst.executeQuery();
+                rs.next();
+                log(rs.getTimestamp(1).toString());
+                Timestamp expiration_time = rs.getTimestamp(1);
+                pst = con.prepareStatement("INSERT INTO tazker.ASSIGN_DOCS"
+                        + " (Assignment_Id,Std_Id,File_Name,Time,lateSubmission) values (?,?,?,now(),?)");
                 pst.setInt(1, id);
                 pst.setInt(2, Integer.parseInt(session.getAttribute("id").toString()));
                 pst.setString(3, fileName);
+                pst.setBoolean(4, expiration_time.before(new Date()));
                 pst.executeUpdate();
             }
             

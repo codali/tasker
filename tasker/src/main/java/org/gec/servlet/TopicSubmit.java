@@ -50,6 +50,7 @@ public class TopicSubmit extends HttpServlet {
             String topic = ESAPI.validator().getValidInput("Assignment Topic", 
                     request.getParameter("topic"), "Name", 100, false);
             String temp = request.getParameter("subject");
+            log(request.getParameter("lastDate"));
             int subject = Integer.parseInt(temp.substring(0,temp.indexOf("_")));
             int semester = Integer.parseInt(temp.substring(temp.indexOf("_")+1));
             log(""+subject);
@@ -75,7 +76,7 @@ public class TopicSubmit extends HttpServlet {
             pst.setDate(5, java.sql.Date.valueOf(DataFetch.formatDate(lastDate, "dd/mm/yyyy", "yyyy-mm-dd")));
             pst.setBoolean(6, lateSubmission);
             log("76");
-            pst.executeUpdate();
+            //pst.executeUpdate();
             log("78");
             session.setAttribute("form","success");
             request.getRequestDispatcher("/index.jsp").forward(request, response);
