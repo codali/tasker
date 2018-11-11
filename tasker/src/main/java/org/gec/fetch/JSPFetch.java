@@ -232,7 +232,7 @@ public class JSPFetch {
         try (PreparedStatement ps = con.prepareStatement("SELECT A.Assignment_Id"
                 + ", S.Subject_Name, A.Topic, A.Lst_Date FROM "
                 + "tazker.AssignmentDetailsTbl A ,tazker.SubjectTbl S WHERE "
-                + "A.Subject_Id = S.Subject_Id")){
+                + "(A.Subject_Id = S.Subject_Id and (A.Lst_Date > now() or (A.Lst_Date < now() and Allow_late = 1)))")){
             try (ResultSet rs = ps.executeQuery()) {
                 while(rs.next())
                 {
