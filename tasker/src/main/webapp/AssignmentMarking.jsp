@@ -20,7 +20,7 @@
         <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
         
     </head>
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini" onload="setInvisible()>
         <div class="wrapper">
             <%@include file="cutpages/header.jsp" %>
             <%@include file="cutpages/teacherside.jsp" %>
@@ -30,6 +30,10 @@
                 </div>
                 <section class="content">
                     <div class="row">
+                        <%
+                                            JSPFetch js = new JSPFetch();
+                                            String[][] table = js.getSubmittedAssignment(Integer.parseInt(session.getAttribute("assignm").toString()));
+                                        %>
                         <div class="col-xs-12">
                             <div class="box">
                                 
@@ -38,10 +42,7 @@
                                 </div>
                                 <div class="box-body table-responsive no-padding">
                                     <form action="AssignmentMark" method="post" id="assgform">
-                                        <%
-                                            JSPFetch js = new JSPFetch();
-                                            String[][] table = js.getSubmittedAssignment(Integer.parseInt(session.getAttribute("assignm").toString()));
-                                        %>
+                                        
                                     <table class="table table-hover">
                                         <tr>
                                             <th>SL<%Integer.parseInt(session.getAttribute("assignm").toString());%> No</th>
@@ -64,6 +65,39 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-xs-7">
+                            <div class="box">
+                                <%String[][] valuated = js.getValuatedAssignment(Integer.parseInt(session.getAttribute("assignm").toString()));%>
+                                <div class="box-header">
+                                    <h3 class="box-title">Valued Assignments</h3>
+                                </div>
+                                <div class="box-body table-responsive no-padding">
+                                    <form action="AssignmentMark" method="post" id="assgform">
+                                        
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <th>SL No</th>
+                                            <th>Studnt Name</th>
+                                            <th>View</th>
+                                            <th>Mark</th>
+                                            <th>Edit</th>
+                                        </tr>
+                                        <%for(int i = 0; i < valuated.length; i++){if(valuated[i][0] == null) break;%>
+                                        <tr>
+                                            <td><%=i+1%></td>
+                                            <td><%=valuated[i][0]%></td>
+                                            <td><a class="btn btn-block btn-primary" href="data/<%=valuated[i][1]%>" target="_blank">View</a></td>
+                                            <td><input type="text" class="col-xs-4 " id="<%=valuated[i][0]%>" disabled="false" value="<%=valuated[i][2]%>"></td>
+                                            <td><button onclick="nmedit('<%=valuated[i][0]%>','<%=valuated[i][1].replace(".", "")%>')"  id ="<%=valuated[i][1].replace(".", "")%>" value="<%=valuated[i][1]%>" class="btn btn-block btn-primary btn-sm" type="button"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                <button onclick="nmset('<%=valuated[i][0]%>')" name="fname" id ="bt<%=valuated[i][1].replace(".", "")%>" value="<%=valuated[i][1]%>" class="btn btn-block btn-primary btn-sm" type="submit"><span class="glyphicon glyphicon-floppy-save"></span></button>
+                                            </td>
+                                        </tr>
+                                        <%}%>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </div>
@@ -75,6 +109,18 @@
         {
             document.getElementById(val).name = "mark";
         }
+        function nmedit(val,btid)
+        {
+             document.getElementById(val).removeAttribute("disabled"); 
+             document.getElementById(btid).disabled = true;
+             document.getElementById("bt"+btid).disabled = false;
+             
+        }
+        window.onload = function() {
+            <%for(int i = 0; i < valuated.length; i++){if(valuated[i][0] == null) break;%>
+            document.getElementById("bt"+"<%=valuated[i][1].replace(".", "")%>").disabled = true;
+            <%}%>
+        };
     </script>
     <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>

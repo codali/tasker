@@ -341,6 +341,39 @@ public class JSPFetch {
         }
         return array;
     }
+    public String[][] getValuatedAssignment(int assignmentId) throws SQLException
+    {
+        getCon();
+        //List<List<String>> listOfLists = new ArrayList<List<String>>();
+        String[][] array = new String[100][3];
+        try{
+            PreparedStatement ps = con.prepareStatement("SELECT S.Std_Name,"
+                    + "A.File_Name,A.Mark FROM tazker.ASSIGN_DOCS A INNER JOIN "
+                    + "tazker.StudentTbl S ON A.Std_Id = S.Std_Id WHERE"
+                    + " A.Assignment_Id = ? AND A.Status = 1");
+            ps.setInt(1, assignmentId);
+            ResultSet rs = ps.executeQuery();
+            
+            int i = 0;
+            while(rs.next()){
+                array[i][0] = rs.getString(1);
+                array[i][1] = rs.getString(2);
+                array[i][2] = rs.getString(3);
+            }
+        } catch (SQLException ex ) {
+            Logger.getLogger(JSPFetch.class.getName()).log(Level.SEVERE, null, ex);
+            
+        } catch (ArrayIndexOutOfBoundsException ex){
+            Logger.getLogger(JSPFetch.class.getName()).log(Level.WARNING, null, ex);
+
+        }
+        
+         
+        finally{
+            killCon();
+        }
+        return array;
+    }
  
        public String getDepCode(int dep_Id) throws SQLException{
         getCon();
