@@ -55,8 +55,7 @@ public class TopicSubmit extends HttpServlet {
             int semester = Integer.parseInt(temp.substring(temp.indexOf("_")+1));
             log(""+subject);
             log(""+semester);
-            String lastDate = ESAPI.validator().getValidInput("Last Date", request.getParameter("lastDate")
-                    , "Date", 10,false);
+            String lastDate = request.getParameter("lastDate");
             String details = ESAPI.validator().getValidSafeHTML("Assignment Details",
                     request.getParameter("details"),1999, false);
             boolean lateSubmission = request.getParameter("latesubmit") != null;
@@ -73,19 +72,19 @@ public class TopicSubmit extends HttpServlet {
             log("72");
             pst.setString(4, details);
             log("74");
-            pst.setDate(5, java.sql.Date.valueOf(DataFetch.formatDate(lastDate, "dd/mm/yyyy", "yyyy-mm-dd")));
+            pst.setDate(5, java.sql.Date.valueOf(DataFetch.formatDate(lastDate, "mm/dd/yyyy", "yyyy-mm-dd")));
             pst.setBoolean(6, lateSubmission);
             log("76");
-            //pst.executeUpdate();
+            pst.executeUpdate();
             log("78");
             session.setAttribute("form","success");
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            request.getRequestDispatcher("/qos.jsp").forward(request, response);
             
 
         } catch (ValidationException | IntrusionException | SQLException | ParseException ex) {
             Logger.getLogger(TopicSubmit.class.getName()).log(Level.SEVERE, null, ex);
             session.setAttribute("form","error");
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            request.getRequestDispatcher("/qos.jsp").forward(request, response);
         }
         finally{
             try {
