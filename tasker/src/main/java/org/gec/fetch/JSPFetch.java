@@ -29,18 +29,16 @@ public class JSPFetch {
         ResultSet rs;
         String qry="";
         String name="";
-        if(type.equals("TCR"))
+        if(type.equals("TCR") || type.equals("HOD"))
         {
             qry = "SELECT Tchr_Name FROM tazker.TeachersTbl WHERE Teacher_Id=?";
         }
         else if(type.equals("STD"))
             qry = "SELECT Std_Name FROM tazker.StudentTbl WHERE Std_Id=?";
-        else if(type.equals("HOD"))
-            name ="Sudheer";
         else
             name="Admin";
         
-        if(type.equals("TCR") ||type.equals("STD")){
+        if(type.equals("TCR") ||type.equals("STD")|| type.equals("HOD")){
             PreparedStatement ps = con.prepareStatement(qry);
             ps.setInt(1, id);
             rs=ps.executeQuery();
