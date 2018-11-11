@@ -112,11 +112,13 @@ public class UploadServlet extends HttpServlet {
                 log(rs.getTimestamp(1).toString());
                 Timestamp expiration_time = rs.getTimestamp(1);
                 pst = con.prepareStatement("INSERT INTO tazker.ASSIGN_DOCS"
-                        + " (Assignment_Id,Std_Id,File_Name,Time,lateSubmission) values (?,?,?,now(),?)");
+                        + " (Assignment_Id,Std_Id,File_Name,Time,lateSubmission) values (?,?,?,now(),?) "
+                        + "ON DUPLICATE KEY UPDATE File_Name=?,Time=now()");
                 pst.setInt(1, id);
                 pst.setInt(2, Integer.parseInt(session.getAttribute("id").toString()));
                 pst.setString(3, fileName);
                 pst.setBoolean(4, expiration_time.before(new Date()));
+                pst.setString(5, fileName);
                 pst.executeUpdate();
             }
             

@@ -307,23 +307,19 @@ public class JSPFetch {
         }
         return array;
     }
-    public String[][] getSubmittedAssignment(int assignmentId) throws SQLException
+    
+    public boolean getAssignmentStatus(int assignmentId,int stdId) throws SQLException
     {
         getCon();
-        //List<List<String>> listOfLists = new ArrayList<List<String>>();
-        String[][] array = new String[100][2];
+        boolean status = false;
         try{
-            PreparedStatement ps = con.prepareStatement("SELECT S.Std_Name,"
-                    + "A.File_Name FROM tazker.ASSIGN_DOCS A INNER JOIN "
-                    + "tazker.StudentTbl S ON A.Std_Id = S.Std_Id WHERE"
-                    + " A.Assignment_Id = ? AND A.Status = 0");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM tazker.ASSIGN_DOCS WHERE Assignment_Id = ? and Std_Id = ?");
             ps.setInt(1, assignmentId);
+            ps.setInt(2,stdId);
             ResultSet rs = ps.executeQuery();
             
-            int i = 0;
-            while(rs.next()){
-                array[i][0] = rs.getString(1);
-                array[i][1] = rs.getString(2);
+            if(rs.next()){
+                status = true;
             }
         } catch (SQLException ex ) {
             Logger.getLogger(JSPFetch.class.getName()).log(Level.SEVERE, null, ex);
@@ -337,7 +333,7 @@ public class JSPFetch {
         finally{
             killCon();
         }
-        return array;
+        return status;
     }
     public String[][] getValuatedAssignment(int assignmentId) throws SQLException
     {

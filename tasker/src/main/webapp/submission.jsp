@@ -30,14 +30,21 @@
     <%@include file="cutpages/studentside.jsp" %>
     <div class="content-wrapper">
     <section class="content">
+        <%
+                        JSPFetch js = new JSPFetch();
+                        boolean status = js.getAssignmentStatus(Integer.parseInt(session.getAttribute("assignm").toString()), Integer.parseInt(session.getAttribute("id").toString()));
+                        String[] assignment = js.getAssignment(Integer.parseInt(session.getAttribute("assignm").toString()));
+                    %>
+        <%if(status == true){%>
+        <div class="callout callout-info">
+        <h4>Reminder!</h4>
+        You have already submitted assignment
+      </div><%}%>
         <div class="box box-widget">
             <div class="box-header with-border">
                 <form method="post" action="UploadServlet" enctype="multipart/form-data">
                 <i class="fa fa-text-width"></i>
-                    <%
-                        JSPFetch js = new JSPFetch();
-                        String[] assignment = js.getAssignment(Integer.parseInt(session.getAttribute("assignm").toString()));
-                    %>
+                    
                     <h3 class="box-title">Assignment Title - <%=assignment[1]%></h3>
             </div>
             <div class="box-body">
