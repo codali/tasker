@@ -37,7 +37,7 @@ public class AssignmentMark extends HttpServlet {
             throws ServletException, IOException {
         try{
             Connection con = Connect.getConnection();
-            PreparedStatement pst = con.prepareStatement("UPDATE DB_GPTC.ASSIGN_DOCS SET Status = 1, Mark = ? WHERE File_Name = ?");
+            PreparedStatement pst = con.prepareStatement("UPDATE tazker.ASSIGN_DOCS SET Status = 1, Mark = ? WHERE File_Name = ?");
             pst.setInt(1, Integer.parseInt(request.getParameter("mark")));
             log(request.getParameter("mark"));
             log(request.getParameter("fname"));
