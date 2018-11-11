@@ -18,20 +18,20 @@
             </span>
           </a>
             <ul class="treeview-menu">
-              <li><a href="class_table.jsp"><i class="fa fa-circle-o"></i>Class Tutor Allocation</a></li>
               <li><a href="dept.jsp"><i class="fa fa-circle-o"></i> Department Add</a></li>
-              <li><a href="teacheradd.jsp"><i class="fa fa-circle-o"></i>Teacher Add</a></li>
+              <li><a href="class_table.jsp"><i class="fa fa-circle-o"></i>Class Tutor Allocation</a></li>
               <li><a href="#"><i class="fa fa-circle-o"></i>Hod Allot</a></li>
             </ul>
         </li>
         <li class="treeview">
           <a href="#">
-              <i class="fa fa-dashboard"></i> <span>Admission</span>
+              <i class="fa fa-dashboard"></i> <span>Registration</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
             <ul class="treeview-menu">
+                <li><a href="teacheradd.jsp"><i class="fa fa-circle-o"></i>Teacher Add</a></li>
                 <li><a href="admission1.jsp"><i class="fa fa-circle-o"></i>Student Admission</a></li>
             </ul>
         </li>
