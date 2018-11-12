@@ -20,7 +20,6 @@
             <ul class="treeview-menu">
               <li><a href="dept.jsp"><i class="fa fa-circle-o"></i> Department Add</a></li>
               <li><a href="class_table.jsp"><i class="fa fa-circle-o"></i>Class Tutor Allocation</a></li>
-              <li><a href="#"><i class="fa fa-circle-o"></i>Hod Allot</a></li>
             </ul>
         </li>
         <li class="treeview">
