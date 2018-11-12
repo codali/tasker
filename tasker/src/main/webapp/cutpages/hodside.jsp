@@ -3,6 +3,7 @@
         <div class="user-panel">
             <div class="pull-left image">
                 <!--FOR SHOWING THE USER IMAGE-->
+                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p>Hi, HOD</p>
@@ -19,9 +20,8 @@
                     </a>
                     <ul class="treeview-menu">
                         <li id="menutopic"><a href="qos.jsp"><i class="fa fa-circle-o"></i> Topics Submission</a></li>
-                      <li id="menuview"><a href="topics.jsp"><i class="fa fa-circle-o"></i> View</a></li>
-                      <li id="menusubmit"><a href="submission.jsp"><i class="fa fa-circle-o"></i>Assignment Submission</a></li>
-                      <li id="menureport"><a href="report.jsp"><i class="fa fa-circle-o"></i>Report</a></li>
+                      <li id="menuview"><a href="topics_1.jsp"><i class="fa fa-circle-o"></i> View</a></li>
+                      
                     </ul>
                 </li>
                 <li class="treeview" id="treeassignment">
