@@ -58,7 +58,7 @@ public class DepartmentServlet extends HttpServlet {
             if(!departmentCode.isEmpty() && !deparmentName.isEmpty())
             {
                 departmentCode = ESAPI.validator().getValidInput("DepartmentCode", departmentCode, "Name", 5, false);
-                deparmentName =  ESAPI.validator().getValidInput("DepartmentName", deparmentName, "Name", 30, false);
+                deparmentName =  ESAPI.validator().getValidInput("DepartmentName", deparmentName, "Name", 40, false);
                 log("Success :Code = "+departmentCode);
                 try{
                     con = Connect.getConnection();
