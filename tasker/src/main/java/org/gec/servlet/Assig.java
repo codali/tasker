@@ -6,11 +6,17 @@
 package org.gec.servlet;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.gec.db.Connect;
 
 /**
  *
@@ -31,10 +37,26 @@ public class Assig extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String id = request.getParameter("submit");
-        session.setAttribute("assignm", id);
-        response.sendRedirect("AssignmentMarking.jsp");
-        log(id);
-        
+        if(id.charAt(0) != 'd') {
+            session.setAttribute("assignm", id);
+            response.sendRedirect("AssignmentMarking.jsp");
+            log(id);
+        }
+        else {
+            id = id.substring(1);
+            log(id);
+            Connection con;
+            try {
+                con = Connect.getConnection();
+                PreparedStatement pstm = con.prepareStatement("DELETE FROM `tazker`.`AssignmentDetailsTbl` WHERE (`Assignment_Id` = ?)");
+                pstm.setInt(1, Integer.parseInt(id));
+                pstm.executeUpdate();
+                response.sendRedirect("topics_1.jsp");
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(Assig.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
