@@ -125,13 +125,14 @@
                                      <div class="form-group">
                                         <label for="empolee_no" class="col-sm-2 control-label">Password</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="phone" name="password">
+                                            <input type="text" class="form-control" id="password" name="password">
                                         </div>
                                      </div>
                                      <div class="form-group">
                                         <label for="empolee_no" class="col-sm-2 control-label">Confirm Password</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="phone" name="confpassword">
+                                            <input type="text" class="form-control" id="confirm_password" name="confpassword" onkeyup='check();' >
+                                            <span id='message'></span>
                                         </div>
                                      </div>
                                             <div class="box-footer">
@@ -171,6 +172,18 @@
         $(function () {
             $(".select2").select2();
         });
+    </script>
+    <script>
+        var check = function() {
+  if (document.getElementById('password').value ==
+    document.getElementById('confirm_password').value) {
+    document.getElementById('message').style.color = 'green';
+    document.getElementById('message').innerHTML = 'matching';
+  } else {
+    document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = 'not matching';
+  }
+}
     </script>
     
 
