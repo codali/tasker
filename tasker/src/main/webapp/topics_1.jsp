@@ -50,6 +50,7 @@
                                             <td><%=ass[i][2]%></td>
                                             <td><%=ass[i][3]%></td>
                                             <td><button type="submit" value="<%=ass[i][0]%>" name="submit" class="btn btn-block btn-primary btn-xs" >More Details</button></td>
+                                            <td><button type="submit" value="d<%=ass[i][0]%>" name="submit" class="btn btn-danger btn-xs">Delete</button> 
                                         </tr>
                                         <%}%>
                                     </table>

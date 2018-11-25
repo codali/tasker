@@ -20,7 +20,7 @@
                     <ul class="treeview-menu">
                       <li id="menutopic"><a href="qos.jsp"><i class="fa fa-circle-o"></i> Topics Submission</a></li>
                       <li id="menuview"><a href="topics_1.jsp"><i class="fa fa-circle-o"></i> View</a></li>
-                      <li id="menureport"><a href="report.jsp"><i class="fa fa-circle-o"></i>Report</a></li>
+                      <!--<li id="menureport"><a href="report.jsp"><i class="fa fa-circle-o"></i>Report</a></li>-->
                     </ul>
                 </li>
                 

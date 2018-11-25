@@ -72,6 +72,10 @@
         <servlet-name>Attendence</servlet-name>
         <servlet-class>org.gec.servlet.Attendence</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteAssignment</servlet-name>
+        <servlet-class>org.gec.servlet.DeleteAssignment</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TestSer</servlet-name>
         <url-pattern>/TestSer</url-pattern>
@@ -139,6 +143,10 @@
     <servlet-mapping>
         <servlet-name>Attendence</servlet-name>
         <url-pattern>/Attendence</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteAssignment</servlet-name>
+        <url-pattern>/DeleteAssignment</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
