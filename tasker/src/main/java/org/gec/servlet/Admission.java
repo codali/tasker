@@ -46,10 +46,6 @@ public class Admission extends HttpServlet {
             log("test");
             String name = ESAPI.validator().getValidInput("Student Name", request.getParameter("name"), "Name", 30, false);
             String user = ESAPI.validator().getValidInput("User Name", request.getParameter("username"), "Name", 10, false);
-            //String address = ESAPI.validator().getValidInput("Address", request.getParameter("address"), "Address", 199, false);
-//            String gender = "f";
-//            if(request.getParameter("gender").equals("male"))
-//                gender = "m";
             String dob = ESAPI.validator().getValidInput("DOB", request.getParameter("dob"), "Date", 10, false);
             String email = ESAPI.validator().getValidInput("Email", request.getParameter("email"), "Email", 100, true);
             String phone = ESAPI.validator().getValidInput("Phone", request.getParameter("phone"), "Number", 10, false);
