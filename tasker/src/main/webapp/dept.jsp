@@ -2,7 +2,7 @@
 <%-- 
     Document   : Admission
     Created on : 22 Feb, 2017, 3:48:13 PM
-    Author     : musthafa
+    Author     : siniya
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
