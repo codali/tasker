@@ -23,7 +23,7 @@ import org.gec.db.Connect;
 
 /**
  *
- * @author musthafa
+ * @author Shamla
  */
 public class LoginServlet extends HttpServlet {
 
