@@ -101,7 +101,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input class="form-control" name="lastDate" id="reservationtime">
+                                                <input class="form-control" name="lastDate" id="reservationtime" onchange="TDate()">
                                             </div>
                                         </div>
                                             
@@ -161,6 +161,18 @@
     <script src="plugins/daterangepicker/moment.js"></script>
     <script src="plugins/daterangepicker/daterangepicker.js"></script>
     <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
+    <script>
+        function TDate() {
+    var UserDate = document.getElementById("reservationtime").value;
+    var ToDate = new Date();
+
+    if (new Date(UserDate).getTime() <= ToDate.getTime()) {
+          alert("The Date must be Bigger or Equal to today date");
+          return false;
+     }
+    return true;
+}
+    </script>
     
     <script>
         $(function () {
