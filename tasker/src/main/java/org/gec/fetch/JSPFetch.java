@@ -53,7 +53,7 @@ public class JSPFetch {
     {
         getCon();
         ResultSet rs;
-        try (PreparedStatement pstmnt = con.prepareStatement("SELECT `department`.`code`,`department`.`name`FROM `tazker`.`department`")) {
+        try (PreparedStatement pstmnt = con.prepareStatement("SELECT `DepartmentTbl`.`Dep_Code`,`DepartmentTbl`.`Dep_Name` FROM `tazker`.`DepartmentTbl`")) {
             rs = pstmnt.executeQuery();
         }
         finally{
@@ -343,7 +343,7 @@ public class JSPFetch {
         String[][] array = new String[100][3];
         try{
             PreparedStatement ps = con.prepareStatement("SELECT S.Std_Name,"
-                    + "A.File_Name,A.Mark FROM tazker.ASSIGN_DOCS A INNER JOIN "
+                    + "A.File_Name,A.Score FROM tazker.ASSIGN_DOCS A INNER JOIN "
                     + "tazker.StudentTbl S ON A.Std_Id = S.Std_Id WHERE"
                     + " A.Assignment_Id = ? AND A.Status = 0");
             ps.setInt(1, assignmentId);
@@ -376,7 +376,7 @@ public class JSPFetch {
         String[][] array = new String[100][3];
         try{
             PreparedStatement ps = con.prepareStatement("SELECT S.Std_Name,"
-                    + "A.File_Name,A.Mark FROM tazker.ASSIGN_DOCS A INNER JOIN "
+                    + "A.File_Name,A.Score FROM tazker.ASSIGN_DOCS A INNER JOIN "
                     + "tazker.StudentTbl S ON A.Std_Id = S.Std_Id WHERE"
                     + " A.Assignment_Id = ? AND A.Status = 1");
             ps.setInt(1, assignmentId);
@@ -406,8 +406,8 @@ public class JSPFetch {
        public String getDepCode(int dep_Id) throws SQLException{
         getCon();
         String result = null;
-        try (PreparedStatement ps = con.prepareStatement("SELECT code "
-                + "FROM tazker.department WHERE ID = ?")) {
+        try (PreparedStatement ps = con.prepareStatement("SELECT Dep_Code "
+                + "FROM tazker.DepartmentTbl WHERE Dep_Id = ?")) {
             ps.setInt(1, dep_Id);
             ResultSet rs  = ps.executeQuery();
             if(rs.next())
@@ -425,8 +425,8 @@ public class JSPFetch {
         String[][] array = new String[20][2];
         int i = 0;
         try {
-            PreparedStatement ps = con.prepareStatement("SELECT department.code,"
-                    + "department.name FROM tazker.department");
+            PreparedStatement ps = con.prepareStatement("SELECT DepartmentTbl.Dep_code,"
+                    + "DepartmentTbl.Dep_Name FROM tazker.DepartmentTbl");
             ResultSet rs  = ps.executeQuery();
             while(rs.next())
             {

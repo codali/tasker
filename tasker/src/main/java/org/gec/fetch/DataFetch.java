@@ -54,8 +54,8 @@ public class DataFetch {
     {
         try {
             getCon();
-            PreparedStatement psmnt = con.prepareStatement("SELECT `department`.`ID`FROM"
-                    + " `tazker`.`department` where `department`.`code`= ?");
+            PreparedStatement psmnt = con.prepareStatement("SELECT `DepartmentTbl`.`Dep_Id`FROM"
+                    + " `tazker`.`DepartmentTbl` where `DepartmentTbl`.`Dep_Code`= ?");
             psmnt.setString(1, DepCode);
             ResultSet rs = psmnt.executeQuery();
             if(rs.next())

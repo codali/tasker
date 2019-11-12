@@ -62,11 +62,12 @@ public class DepartmentServlet extends HttpServlet {
                 log("Success :Code = "+departmentCode);
                 try{
                     con = Connect.getConnection();
-                    pstmt = con.prepareStatement("INSERT INTO `tazker`.`department`(`code`,`name`)VALUES(?,?)");
+                    pstmt = con.prepareStatement("INSERT INTO `tazker`.`DepartmentTbl`(`Dep_Code`,`Dep_Name`)VALUES(?,?)");
                     pstmt.setString(1, departmentCode);
                     pstmt.setString(2, deparmentName);
                     pstmt.executeUpdate();
                     session.setAttribute("form", "success");
+                    
                     pstmt.close();
                     //con.close();
                  }

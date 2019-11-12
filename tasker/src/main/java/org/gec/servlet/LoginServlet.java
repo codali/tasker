@@ -56,8 +56,8 @@ public class LoginServlet extends HttpServlet {
                 {
                     response.sendRedirect("index.jsp");
                     log("LOGIN SUCCESSSSS");
-                    session.setAttribute("id", rs.getString("Id"));
-                    session.setAttribute("role", rs.getString("Role"));
+                    session.setAttribute("id", rs.getString("ID"));
+                    session.setAttribute("role", rs.getString("role"));
                     session.setAttribute("form", "");
                     rs.close();
                     pstm.close();

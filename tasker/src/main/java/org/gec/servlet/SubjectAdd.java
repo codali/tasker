@@ -50,7 +50,7 @@ public class SubjectAdd extends HttpServlet {
         String name ="";
         int sem = 0;
         int periods = 0;
-        int ringCount = 1;
+        int ringCount = 0;
         
         while(en.hasMoreElements())
 	{
@@ -59,25 +59,49 @@ public class SubjectAdd extends HttpServlet {
             String value=(String)objOri;
             log(value);
             try{
-                switch(ringCount){
-                    case 1: code = request.getParameter(value);
-                            log(""+code);
-                            ringCount++;
-                            break;
-                    case 2: name = ESAPI.validator().getValidInput("Subject Name", request.getParameter(value), "Name", 30, false);
-                            log(name);
-                            ringCount++;
-                            break;
-                    case 3: periods = ESAPI.validator().getValidInteger("Periods/Week", request.getParameter(value), 1, 20, false);
-                            log(""+sem);
-                            ringCount++;
-                            break;
-                    case 4: sem = ESAPI.validator().getValidInteger("Semester", request.getParameter(value), 1, 6, false);
-                            log(""+periods);
-                            ringCount = 1;
-                            dataUpload(code, name, periods, sem);
-                            break;
+                if(value.contains("periods")) {
+                    periods = ESAPI.validator().getValidInteger("Periods/Week", request.getParameter(value), 1, 100, false);
+                    log("per = "+periods);
+                    ringCount++;
                 }
+                else if(value.contains("code")) {
+                    code = request.getParameter(value);
+                    log("Code  = "+code);
+                    ringCount++;
+                }
+                else if(value.contains("name")) {
+                    name = ESAPI.validator().getValidInput("Subject Name", request.getParameter(value), "Name", 30, false);
+                    log("NAm "+name);
+                    ringCount++;
+                }
+                else if(value.contains("semester")) {
+                    sem = ESAPI.validator().getValidInteger("Semester", request.getParameter(value), 1, 8, false);
+                    log("sen = "+sem);
+                    ringCount++;
+                }
+                if(ringCount == 4) {
+                    ringCount = 0;
+                    dataUpload(code, name, periods, sem);
+                }
+//                switch(ringCount){
+//                    case 2: code = request.getParameter(value);
+//                            log("Code  = "+code);
+//                            ringCount++;
+//                            break;
+//                    case 4: name = ESAPI.validator().getValidInput("Subject Name", request.getParameter(value), "Name", 30, false);
+//                            log("NAm "+name);
+//                            ringCount++;
+//                            break;
+//                    case 1: periods = ESAPI.validator().getValidInteger("Periods/Week", request.getParameter(value), 1, 100, false);
+//                            log("per = "+periods);
+//                            ringCount++;
+//                            break;
+//                    case 3: sem = ESAPI.validator().getValidInteger("Semester", request.getParameter(value), 1, 8, false);
+//                            log("sen = "+sem);
+//                            ringCount = 1;
+//                            dataUpload(code, name, periods, sem);
+//                            break;
+//                }
             }
             catch(ValidationException |IntrusionException | SQLException ex){
                Logger.getLogger(SubjectAdd.class.getName()).log(Level.SEVERE, null, ex);
@@ -97,6 +121,7 @@ public class SubjectAdd extends HttpServlet {
                 + "`Periods_Week`,`Dep_Id`,`Semester`)"
                 + "VALUES(?,?,?,?,?)")) {
         pst.setString(1, cod);
+            log("dsfds = "+nam);
         pst.setString(2, nam);
         pst.setInt(3, period);
         pst.setInt(4,df.getDepId("CSE"));//HARD CODED DEP NAME

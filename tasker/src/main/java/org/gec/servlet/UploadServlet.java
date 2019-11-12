@@ -111,15 +111,23 @@ public class UploadServlet extends HttpServlet {
                 rs.next();
                 log(rs.getTimestamp(1).toString());
                 Timestamp expiration_time = rs.getTimestamp(1);
+                log("dss");
                 pst = con.prepareStatement("INSERT INTO tazker.ASSIGN_DOCS"
                         + " (Assignment_Id,Std_Id,File_Name,Time,lateSubmission) values (?,?,?,now(),?) "
                         + "ON DUPLICATE KEY UPDATE File_Name=?,Time=now()");
                 pst.setInt(1, id);
+                log("d");
                 pst.setInt(2, Integer.parseInt(session.getAttribute("id").toString()));
+                log("d");
                 pst.setString(3, fileName);
+                log("d");
+                
                 pst.setBoolean(4, expiration_time.before(new Date()));
+                log("dn");
                 pst.setString(5, fileName);
+                log("d");
                 pst.executeUpdate();
+                log("file uploaded");
             }
             
             getServletContext().getRequestDispatcher("/index.jsp").forward(
@@ -128,11 +136,13 @@ public class UploadServlet extends HttpServlet {
         } catch (FileUploadException ex) {
             errorDispatch(request,response);
         } catch (Exception ex) {
+            log(ex.toString());
             errorDispatch(request,response);
         } 
     }
     private void errorDispatch(HttpServletRequest request, HttpServletResponse response)throws ServletException,IOException
     {
+        
         getServletContext().getRequestDispatcher("/submission.jsp").forward(
                     request, response);
     }
