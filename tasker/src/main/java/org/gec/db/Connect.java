@@ -21,7 +21,7 @@ public class Connect {
     {
         if (con != null) return con;
         // get db, user, pass from settings file
-        return getConnection("tazker", "root", "root");
+        return getConnection("tazker", "root", "");
     }
 
     private static Connection getConnection(String db_name,String user_name,String password)

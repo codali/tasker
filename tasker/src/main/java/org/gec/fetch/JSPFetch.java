@@ -52,15 +52,100 @@ public class JSPFetch {
     public ResultSet getDep() throws SQLException
     {
         getCon();
-        ResultSet rs;
+        ResultSet rsa;
+        String[][] array = new String[100][3];
         try (PreparedStatement pstmnt = con.prepareStatement("SELECT `DepartmentTbl`.`Dep_Code`,`DepartmentTbl`.`Dep_Name` FROM `tazker`.`DepartmentTbl`")) {
-            rs = pstmnt.executeQuery();
+            rsa = pstmnt.executeQuery();
         }
         finally{
             killCon();
         }
-        return  rs;
+        return  rsa;
     }
+    public String[][] getDepDetail() throws SQLException
+    {
+        getCon();
+        ResultSet rs;
+        String[][] array = new String[20][2];
+        try (PreparedStatement pstmnt = con.prepareStatement("SELECT `DepartmentTbl`.`Dep_Code`,`DepartmentTbl`.`Dep_Name` FROM `tazker`.`DepartmentTbl`")) {
+            rs = pstmnt.executeQuery();
+            int i = 0;
+            while(rs.next())
+            {
+                array[i][1] = rs.getString(1);
+                array[i][0] = rs.getString(2);
+                System.out.println("ssfgfg");
+                i++;
+            }
+            rs.close();
+            pstmnt.close();
+        }
+        finally{
+            killCon();
+        }
+        return  array;
+    }
+    
+    public String[][] getTeachersList() throws SQLException
+    {
+        getCon();
+        ResultSet rs;
+        String[][] array = new String[50][5];
+        try (PreparedStatement pstmnt = con.prepareStatement("SELECT `Teacher_Id`,"
+                + " `Tchr_Name`,`Dep_Code`, `Email`, `Phone` FROM `TeachersTbl` as ts,"
+                + " `DepartmentTbl` as dt WHERE ts.`Dep_Id`= dt.`Dep_Id`")) {
+            rs = pstmnt.executeQuery();
+            int i = 0;
+            while(rs.next())
+            {
+                array[i][0] = rs.getString(1);
+                array[i][1] = rs.getString(2);
+                array[i][2] = rs.getString(3);
+                array[i][3] = rs.getString(4);
+                array[i][4] = rs.getString(5);
+                i++;
+            }
+            rs.close();
+            pstmnt.close();
+        }
+        finally{
+            killCon();
+        }
+        return  array;
+    }
+    
+    public String[][] getStudentsList() throws SQLException
+    {
+        getCon();
+        ResultSet rs;
+        String[][] array = new String[100][7];
+        String query = "SELECT `Std_Id`, `Std_Name`, `Dob`, `Email`, `Phone`,"
+                + " `Guar_Name`, `Adm_Date` FROM `StudentTbl` WHERE `Class_ID` > 0";
+        try (PreparedStatement pstmnt = con.prepareStatement(query)) {
+            rs = pstmnt.executeQuery();
+            int i = 0;
+            while(rs.next())
+            {
+                array[i][0] = rs.getString(1);
+                array[i][1] = rs.getString(2);
+                array[i][2] = rs.getString(3);
+                array[i][3] = rs.getString(4);
+                array[i][4] = rs.getString(5);
+                array[i][5] = rs.getString(6);
+                array[i][6] = rs.getString(7);
+                i++;
+            }
+            rs.close();
+            pstmnt.close();
+        }
+        finally{
+            killCon();
+        }
+        return  array;
+    }
+    
+    
+    
     public static String[] getTeacherName() throws SQLException{
         getCon();
         String[] array = new String[100];

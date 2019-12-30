@@ -34,6 +34,32 @@
                 <li><a href="admission1.jsp"><i class="fa fa-circle-o"></i>Student Admission</a></li>
             </ul>
         </li>
+        <li class="treeview">
+          <a href="#">
+              <i class="fa fa-dashboard"></i> <span>View List</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+            <ul class="treeview-menu">
+                <li><a href="teacherslist.jsp"><i class="fa fa-circle-o"></i>Teachers List</a></li>
+                <li><a href="studentslist.jsp"><i class="fa fa-circle-o"></i>Students List</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+              <i class="fa fa-paper-plane-o"></i> <span>Notification</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+            <ul class="treeview-menu">
+                <li><a href="deptnotfcation.jsp"><i class="fa fa-circle-o"></i>Departmental</a></li>
+                <li><a href="teacherslist.jsp"><i class="fa fa-circle-o"></i>Teacher</a></li>
+                <li><a href="studentslist.jsp"><i class="fa fa-circle-o"></i>Class</a></li>
+                <li><a href="studentslist.jsp"><i class="fa fa-circle-o"></i>Student</a></li>
+            </ul>
+        </li>
       </ul>
     </section>
   </aside>

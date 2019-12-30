@@ -1,49 +1,54 @@
 <%-- 
-<%-- 
     Document   : Admission
     Created on : 22 Feb, 2017, 3:48:13 PM
-    Author     : siniya
+    Author     : musthafa
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="org.gec.fetch.JSPFetch" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Tazker </title>
+        <title>Tazker</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
         <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+        <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+        <link rel="stylesheet" href="plugins/select2/select2.min.css">
+        
     </head>
     <body class="hold-transition skin-purple sidebar-mini">
         <div class="wrapper">
             <%@include file="cutpages/header.jsp" %>
             <%@include file="cutpages/adminside.jsp" %>
             <div class="content-wrapper">
-                <!-- Content Header (Page header) -->
                 <section class="content">
                     <div class="row">
-                        <!-- left column -->
                         <div class="col-md-7">
                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">DEPARTMENT</h3>
+                                    <h3 class="box-title">Department Wise Notification</h3>
                                 </div>
-                                  
-                                <form class="form-horizontal" id="Department" method="post" action="DepartmentServlet">
+                               
+                                <form class="form-horizontal" id="regForm" method="post" action="ClassAllocation">
                                 <div class="box-body">
-                                <% 
+                                    <%
                                     if(session.getAttribute("form").equals("used")){
                                       session.setAttribute("form", "");
                                  %>
                                 <div class="alert alert-danger alert-dismissible">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                     <h4><i class="icon fa fa-ban"></i> Alert!</h4>
-                                    Department Code&Backslash;Name is already used
+                                    Database error Octry {
+//            //con.close();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DataFetch.class.getName()).log(Level.SEVERE, null, ex);
+//        }cured.
                                 </div> 
                                  <%
                                      }
@@ -54,93 +59,61 @@
                                 <div class="alert alert-danger alert-dismissible ">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                     <h4><i class="icon fa fa-ban"></i> Alert!</h4>
-                                    Invalid Department Code &Backslash; Name
+                                    Validation Error. Please Ensure all the data is correct.
                                 </div> 
                                 <% } %>
                                 <% if(session.getAttribute("form").equals("success")){%>
                                 <div class="alert alert-success alert-dismissible">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
                                     <h4><i class="icon fa fa-check"></i>Success</h4>
+                                        Form Successfully Submitted.
                                 </div>
                                 <% }
                                     session.setAttribute("form", "");
-                                    JSPFetch js=new JSPFetch();
-                                    String array[][] = js.getDepDetail();
                                 %>
-                                    
                                     <div class="form-group">
-                                        <label for="teacher_name" class="col-sm-2 control-label">Department Code</label>
+                                        <label for="teacher_name" class="col-sm-2 control-label">Department code</label>
                                         <div class="col-xs-4">
-                                            <input type="text" class="form-control" id="deptcode" name="deptcode" placeholder="Required" >
+                                            <select name="dept" class="form-control select2" style="width: 100%">
+                                                <% JSPFetch js = new JSPFetch();
+                                                   String[][] dep= js.getDepName();
+                                                   for(int i = 0 ; i < dep.length ; i++)
+                                                   { %>
+                                                   <%if(dep[i][0]==null)break;%>
+                                                   <option value="<%=dep[i][0]%>"><%=dep[i][1]%></option>
+                                                   <% } %>
+                                            </select>
                                         </div>
-                                        
                                     </div>
                                     <div class="form-group">
-                                        <label for="empolee_no" class="col-sm-2 control-label">Department Name</label>
+                                        <label for="empolee_no" class="col-sm-2 control-label">Message</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="deptname" name="deptname">
+                                           <input type="text" class="form-control" id="deptname" name="deptMsg">
                                         </div>
                                     </div>
-                                    <!-- /.box-body -->
                                     <div class="box-footer">
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
                                 </form>
-                                
                             </div>
                         </div>
-                                <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Current Departments</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body no-padding">
-              <table class="table table-striped">
-                <tr>
-                  <th style="width: 10px">#</th>
-                  <th>Name</th>
-                  <th>Code</th>
-                  <th style="width: 70px">Edit</th>
-                </tr>
-                <% 
-                    for(int i = 0 ; i < array.length ; i++) {
-                %>
-                <%if(array[i][0]==null)break;%>
-                <tr>
-                   <td><%=i+1%>.</td>
-                   <td><%=array[i][0]%></td>
-                  <td><%=array[i][1]%></td>
-                  <td>
-                      <button type="button" class="btn btn-block btn-warning btn-sm"><i class="fa fa-fw fa-pencil"></i></button>
-                  </td>
-                </tr>
-                <% }
-                %>
-              </table>
-            </div>
-            <!-- /.box-body -->
-          </div>
-
                     </div>
-                                
                 </section> 
-                <!-- /.content -->
             </div>
-            <!-- /.content-wrapper --> 
             <%@include file="cutpages/footer.jsp" %>
         </body>
-    <!-- jQuery 2.2.3 -->
     <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
-    
-    <!-- jQuery UI 1.11.4 -->
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button);
     </script>
-    
-    <!-- Bootstrap 3.3.6 -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <script src="dist/js/app.min.js"></script>
-    
+    <script src="plugins/select2/select2.full.min.js"></script>
+    <script>
+        $(function () {
+            $(".select2").select2();
+        });
+    </script>
 </html>
